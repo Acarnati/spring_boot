@@ -28,10 +28,10 @@ public class DataInicializer {
         roleService.createRole(role1);
         roleService.createRole(role2);
         User user1 = new User("ADMIN", "Иван", "Иванов", (byte) 29,
-                "ivanov@mail.ru", encoder.encode("ADMIN"), role1, role2);
+                "ivanov@mail.ru", "ADMIN", role1, role2);
         userService.createUser(user1);
         User user2 = new User("USER", "Ирина", "Лапина", (byte) 35,
-                "lapina@mail.ru", encoder.encode("USER"), role2);
+                "lapina@mail.ru", "USER", role2);
         userService.createUser(user2);
     }
 }
