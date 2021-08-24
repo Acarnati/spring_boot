@@ -65,12 +65,13 @@
             <input type="text" name="password" th:id="password" th:value="${user.getPassword()}">
         </div>
         <h4>Редактировать роли:</h4>
-        <td>
-            <th:block th:each="role: ${roles}">
-                <input type="checkbox" th:field="*{roles}"
-                       th:text="${role.role}" th:value="${role.getRole()}" class="m-2" />
-            </th:block>
-        </td>
+        <select name="rolesSelected" multiple required size="6">
+            <option disabled selected>select role</option>
+            <div  th:each="role : ${roles}">
+                <option th:text="${role.getRole()}" th:value="${role.getId()}"
+                        th:field="*{roles}" name="roles"/>
+            </div>
+        </select>
         <br>
         <button type="submit">Сохранить изменения</button>
     </form>

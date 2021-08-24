@@ -2,6 +2,7 @@ package web.springboot.dao;
 
 import org.springframework.stereotype.Repository;
 import web.springboot.model.Role;
+import web.springboot.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,16 +28,7 @@ public class RoleDAOImp implements RoleDAO {
     }
 
     @Override
-    public Role getRoleByName(String name) {
-        Role role = null;
-        try {
-            role = getEntityManager()
-                    .createQuery("SELECT r FROM Role r WHERE r.role=:name", Role.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
-        } catch (Exception e) {
-            System.out.println("Роли с таким именем не существует!");
-        }
-        return role;
+    public Role getRoleById(int id) {
+        return entityManager.find(Role.class, id);
     }
 }

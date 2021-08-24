@@ -69,12 +69,13 @@
         </div>
         <br>
         <h4>Выбрать роли:</h4>
-        <td>
-            <th:block th:each="role: ${roles}">
-                <input type="checkbox" th:field="*{roles}"
-                       th:text="${role.role}" th:value="${role.role}" class="m-2" />
-            </th:block>
-        </td>
+        <select name="rolesSelected" multiple required size="6">
+            <option disabled selected>select role</option>
+            <div  th:each="role : ${roles}">
+                <option th:text="${role.getRole()}" th:value="${role.getId()}"
+                        th:field="*{roles}" name="roles"/>
+            </div>
+        </select>
         <br>
         <br>
         <button type="submit">Сохранить пользователя</button>

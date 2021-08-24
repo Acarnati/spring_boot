@@ -53,19 +53,18 @@ public class AdminController {
     }
 
     @PostMapping(value = "users/add")
-    public String addUser(@ModelAttribute("user") User user) {
+    public String addUser(@ModelAttribute("user") User user, @RequestParam(name = "rolesSelected",
+            defaultValue = "0") Integer[] rolesId) {
         Set<Role> roles = new HashSet<>();
-        ArrayList<String> roleUser = new ArrayList<>();
-        roleUser = user.getRolesUser(user);
-        for (String nameRole: roleUser) {
-            roles.add(roleService.getRoleByName(nameRole));
+        for (int i = 0; i < rolesId.length; i++) {
+            roles.add(roleService.getRoleById(rolesId[i]));
         }
         user.setRoles(roles);
         userService.createUser(user);
         return "redirect:/admin";
     }
 
-    @GetMapping(value="users/delete")
+    @GetMapping(value = "users/delete")
     public String deleteUs(@RequestParam("id") int id) {
         userService.deleteUser(id);
         return "redirect:/admin";
@@ -81,12 +80,11 @@ public class AdminController {
     }
 
     @PostMapping(value = "users/update")
-    public String update(@ModelAttribute("user") User user) {
+    public String update(@ModelAttribute("user") User user, @RequestParam(name = "rolesSelected",
+            defaultValue = "0") Integer[] rolesId) {
         Set<Role> roles = new HashSet<>();
-        ArrayList<String> roleUser = new ArrayList<>();
-        roleUser = user.getRolesUser(user);
-        for (String nameRole: roleUser) {
-            roles.add(roleService.getRoleByName(nameRole));
+        for (int i = 0; i < rolesId.length; i++) {
+            roles.add(roleService.getRoleById(rolesId[i]));
         }
         user.setRoles(roles);
         userService.updateUser(user);
