@@ -1,24 +1,24 @@
 package web.springboot.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.springboot.dao.UserDAO;
 import web.springboot.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class UserServiceImp implements UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    @Autowired
-    public void setUserDao(UserDAO userDAO) {
+    public UserServiceImp(UserDAO userDAO, BCryptPasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -33,6 +33,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.createUser(user);
     }
 
@@ -48,6 +49,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void updateUser(User user) {
+        User oldUser = userDAO.getUserById(user.getId());
+        if (!oldUser.getPassword().equals(user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userDAO.updateUser(user);
     }
 }

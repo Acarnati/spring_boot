@@ -27,11 +27,11 @@ public class DataInicializer {
         Role role2 = new Role("USER");
         roleService.createRole(role1);
         roleService.createRole(role2);
-        User user1 = new User("ADMIN", "Иван", "Иванов", (byte) 29,
-                "ivanov@mail.ru", "ADMIN", role1, role2);
+        User user1 = new User("admin", "Иван", "Иванов", (byte) 29,
+                "ivanov@mail.ru", "1", role1, role2);
         userService.createUser(user1);
-        User user2 = new User("USER", "Ирина", "Лапина", (byte) 35,
-                "lapina@mail.ru", "USER", role2);
+        User user2 = new User("user", "Ирина", "Лапина", (byte) 35,
+                "lapina@mail.ru", "2", role2);
         userService.createUser(user2);
     }
 }
